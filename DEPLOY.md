@@ -79,7 +79,7 @@ git push -u origin main
 
 Render 免费实例在一段时间无人使用后会休眠，下一次打开可能要等几十秒唤醒；如果每天使用，建议升级到最小付费实例，保持常驻。
 
-如果 Render 要求绑定银行卡，可以改用 **SnapDeploy** 免费容器：不用卡，GitHub 仓库直接部署，512 MB / 0.25 CPU，15 分钟无访问休眠，免费 HTTPS 地址，每月 100 小时。部署时建议设置 `TTS_CONCURRENCY=1`，避免 512 MB 内存下同时跑两个 Python 语音进程。
+如果 Render 要求绑定银行卡，可以改用 **SnapDeploy** 免费容器：不用卡，GitHub 仓库直接部署，512 MB / 0.25 CPU，15 分钟无访问休眠，免费 HTTPS 地址，每月 100 小时。部署时端口使用 `3000`，并建议设置 `TTS_CONCURRENCY=1`，避免 512 MB 内存下同时跑两个 Python 语音进程。
 
 或者用 **Railway Free**（每月 $1 额度，不需要卡）作为备选。
 
@@ -94,7 +94,7 @@ Edge 自然人声和在线搜书都需要服务器访问外网：
 
 ```bash
 docker build -t shiye .
-docker run -d --name shiye -p 8080:8080 -e HOST=0.0.0.0 shiye
+docker run -d --name shiye -p 3000:3000 -e HOST=0.0.0.0 shiye
 ```
 
 生产环境请放在 HTTPS 反向代理（Caddy / Nginx / 云平台自带 HTTPS）后面。  

@@ -15,7 +15,7 @@ RUN python3 -m venv /opt/edge \
 
 ENV PATH="/opt/edge/bin:${PATH}"
 ENV HOST=0.0.0.0
-ENV PORT=8080
+ENV PORT=3000
 ENV NODE_ENV=production
 
 WORKDIR /app
@@ -24,6 +24,6 @@ COPY . .
 # 云端使用 Linux 版 edge-tts；即使 vendor 被上传，也不让 macOS 二进制参与。
 RUN rm -rf /app/vendor
 
-EXPOSE 8080
+EXPOSE 3000
 
 CMD ["node", "server.mjs"]
