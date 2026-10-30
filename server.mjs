@@ -324,6 +324,7 @@ const TTS_CACHE_LIMIT = 48;
 let ttsAvailablePromise = null;
 let activeTts = 0;
 const ttsQueue = [];
+const MAX_TTS_CONCURRENT = Math.max(1, Number(process.env.TTS_CONCURRENCY || 2));
 
 function pythonCommand() {
   if (process.env.PYTHON) return process.env.PYTHON;
@@ -367,7 +368,7 @@ function checkTtsAvailability() {
 }
 
 function acquireTtsSlot() {
-  if (activeTts < 2) {
+  if (activeTts < MAX_TTS_CONCURRENT) {
     activeTts += 1;
     return Promise.resolve();
   }
