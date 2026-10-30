@@ -1,0 +1,12 @@
+{
+  "name": "shiye",
+  "version": "1.0.0",
+  "private": true,
+  "description": "拾页 · 把书读薄，把世界读厚",
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

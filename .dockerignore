@@ -1,0 +1,8 @@
+.git
+.gitignore
+node_modules
+vendor
+*.zip
+.DS_Store
+assets/preview-*.jpg
+assets/voice-sample-*.mp3
