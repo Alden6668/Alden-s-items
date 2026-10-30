@@ -20,6 +20,9 @@ ENV NODE_ENV=production
 WORKDIR /app
 COPY . .
 
+# 云端使用 Linux 版 edge-tts；即使 vendor 被上传，也不让 macOS 二进制参与。
+RUN rm -rf /app/vendor
+
 EXPOSE 8080
 
 CMD ["node", "server.mjs"]

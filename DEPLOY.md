@@ -26,8 +26,18 @@
    - `index.html`
    - `js/`、`css/`、`assets/`
 
-> GitHub 网页上传时，请确认 `.dockerignore`、`render.yaml` 这类以点开头的文件也上传了。  
+> GitHub 网页上传时，请确认 `render.yaml`、`Dockerfile`、`package.json` 都上传了；`.dockerignore` 不是必需的（Dockerfile 会自动删除 macOS 的 vendor）。  
 > 如果不会用 Git，可以直接在 GitHub 网页里用 “Add file → Upload files” 拖入整个项目。
+
+也可以用终端推送。项目已经是一个本地 Git 仓库（`main` 分支、已提交）：
+
+```bash
+cd /Users/qienda/Documents/deepseek-harness/default-workspace
+git remote add origin https://github.com/<你的用户名>/shiye-app.git
+git push -u origin main
+```
+
+如果终端要求登录，请使用 GitHub 的 Personal Access Token（不要使用账号密码），或者用 GitHub Desktop 打开这个文件夹后点 Publish。
 
 ### 2. 在 Render 部署
 
@@ -37,6 +47,11 @@
 4. Render 会读取 `render.yaml`，创建一个免费 Web Service；
 5. 点 **Apply / Deploy**，等待构建完成（第一次会安装 Node、Python 和 edge-tts，约几分钟）；
 6. 部署成功后会得到一个类似 `https://shiye-xxxx.onrender.com` 的 HTTPS 地址。
+
+部署完成后可以先访问：
+
+- `/api/health` 应返回 `{"ok":true,...}`；
+- `/api/tts/status` 应返回 `available: true`（如果为 false，朗读会回退系统语音）。
 
 打开这个地址，确认首页正常，再测试：
 
@@ -80,6 +95,20 @@ docker run -d --name shiye -p 4321:4321 -e PORT=4321 -e HOST=0.0.0.0 shiye
 
 生产环境请放在 HTTPS 反向代理（Caddy / Nginx / 云平台自带 HTTPS）后面。  
 Railway、Fly.io、Koyeb、Cloud Run 等平台选择 Docker 部署即可；端口使用平台注入的 `PORT`。
+
+## 常见问题
+
+**构建失败 / 一直 Building**  
+打开 Render 的 Logs 查看。最常见的是第一次安装 Python 依赖超时，重新点一次 Manual Deploy 即可；持续失败把日志发我。
+
+**自然人声不可用**  
+访问 `/api/tts/status` 看 `available`。云服务器无法访问微软语音时会回退系统语音；可以换区域重新部署，或后续换成 Azure 语音。
+
+**手机不能安装**  
+必须使用 Render 给出的 HTTPS 地址；局域网 HTTP 地址只能做快捷方式。iPhone 用 Safari 的“添加到主屏幕”。
+
+**免费实例很慢**  
+免费实例会休眠，第一次打开需要唤醒。每天使用建议升级到最小付费实例。
 
 ## 安全说明
 
