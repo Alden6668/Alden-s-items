@@ -15,6 +15,7 @@ RUN python3 -m venv /opt/edge \
 
 ENV PATH="/opt/edge/bin:${PATH}"
 ENV HOST=0.0.0.0
+ENV PORT=8080
 ENV NODE_ENV=production
 
 WORKDIR /app

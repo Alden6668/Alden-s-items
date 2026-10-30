@@ -90,7 +90,7 @@ Edge 自然人声和在线搜书都需要服务器访问外网：
 
 ```bash
 docker build -t shiye .
-docker run -d --name shiye -p 4321:4321 -e PORT=4321 -e HOST=0.0.0.0 shiye
+docker run -d --name shiye -p 8080:8080 -e HOST=0.0.0.0 shiye
 ```
 
 生产环境请放在 HTTPS 反向代理（Caddy / Nginx / 云平台自带 HTTPS）后面。  
